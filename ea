@@ -1,1 +1,23 @@
-Blank
+	    try {
+	        FileInputStream in = new FileInputStream("C:\\input_file.docx");
+	        XWPFDocument doc = new XWPFDocument(in);
+	        java.util.Iterator<XWPFParagraph> paragraphIt = doc.getParagraphsIterator();
+	        int pIndex = 0;
+	        while(paragraphIt.hasNext()) {
+	        	XWPFParagraph existingParagraph = paragraphIt.next();
+	        
+	            XWPFDocument outputDocument = new XWPFDocument();
+	            XWPFParagraph newParagraph = outputDocument.createParagraph();
+	            	            
+	            cloneParagraph(newParagraph, existingParagraph); // http://stackoverflow.com/questions/23112924/make-an-exact-copy-of-a-paragraph-including-all-contents-and-properties
+	            
+	            FileOutputStream outputStream = new FileOutputStream("output_file_" + (++pIndex) + ".docx");
+	            outputDocument.write(outputStream);
+	            outputDocument.close();
+	            outputStream.close();
+	        
+	        }	
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }		
+
